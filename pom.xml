@@ -5,14 +5,6 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>jit-bug</name>
 
-  <dependencies>
-    <dependency>
-        <groupId>org.scala-lang</groupId>
-        <artifactId>scala-library</artifactId>
-        <version>2.12.0-M4</version>
-    </dependency>
-  </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -24,36 +16,20 @@
         </configuration>
       </plugin>
       <plugin>
-      <artifactId>maven-assembly-plugin</artifactId>
-      <configuration>
-        <archive>
-          <manifest>
-            <mainClass>org.alext.jitbug.TestCase</mainClass>
-          </manifest>
-        </archive>
-        <descriptorRefs>
-          <descriptorRef>jar-with-dependencies</descriptorRef>
-        </descriptorRefs>
-      </configuration>
-    </plugin>
-
-
-    <plugin>
-      <groupId>org.codehaus.mojo</groupId>
-      <artifactId>exec-maven-plugin</artifactId>
-      <version>1.5.0</version>
-      <executions>
-        <execution>
-          <goals>
-            <goal>java</goal>
-          </goals>
-        </execution>
-      </executions>
-      <configuration>
-        <mainClass>org.alext.jitbug.TestCase</mainClass>
-      </configuration>
-    </plugin>
-
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.5.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>java</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <mainClass>org.alext.jitbug.TestCase</mainClass>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>

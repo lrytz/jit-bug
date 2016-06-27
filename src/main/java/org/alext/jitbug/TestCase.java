@@ -3,9 +3,6 @@ package org.alext.jitbug;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
-
-import scala.Tuple6;
-
 public class TestCase {
     public static void main(String[] args) throws InterruptedException {
         int count = 10;
@@ -14,14 +11,12 @@ public class TestCase {
             for (int j = 0; j < count; j++) {
                 Thread t = new Thread(new Worker(l));
                 t.start();
-                System.out.println(" Started thread: " + t.getName());
             }
             l.await();
         }
     }
 
     public static class Worker implements Runnable {
-
         private CountDownLatch latch;
 
         public Worker(CountDownLatch latch) {
@@ -37,9 +32,9 @@ public class TestCase {
 
                 for (long i = 0; i < 40_000l; i++) {
                     TimeShiftingViewingPeriod viewingPeriod = TimeShiftingViewingPeriod.LIVE_7;
-                    Tuple6<Long, Long, Byte, String, Byte, String> res = doStuff(demoIds, 192837934738l, viewingPeriod, "0");
-                    if (res._3() == null) {
-                        System.out.println(" Start reproducing: Thread" + Thread.currentThread().getName() + " at step: " + i + " res:  " + res);
+                    JTuple6<Long, Long, Byte, String, Byte, String> res = doStuff(demoIds, 192837934738l, viewingPeriod, "0");
+                    if (res.t3 == null) {
+                        System.out.println(" >> Found null: " + Thread.currentThread().getName() + " at step: " + i + " res:  " + res);
                         break;
                     }
                 }
@@ -48,16 +43,15 @@ public class TestCase {
             }
         }
 
-        private Tuple6<Long, Long, Byte, String, Byte, String> doStuff(
+        private JTuple6<Long, Long, Byte, String, Byte, String> doStuff(
                 List<String> demoIds,
                 long programId,
                 TimeShiftingViewingPeriod viewingPeriod,
                 String marketBreak) {
-            C<Tuple6<Long, Long, Byte, String, Byte, String>> r = new C<>(null);
-            demoIds.forEach(demoId -> r.t = new Tuple6<>(null, programId, viewingPeriod.getId(), null, null, marketBreak));
+            C<JTuple6<Long, Long, Byte, String, Byte, String>> r = new C<>(null);
+            demoIds.forEach(demoId -> r.t = new JTuple6<>(null, programId, viewingPeriod.getId(), null, null, marketBreak));
             return r.t;
         }
-
     }
 
     static class C<T> {
@@ -81,5 +75,35 @@ public class TestCase {
             return id;
         }
 
+    }
+
+    static class JTuple6<T1, T2, T3, T4, T5, T6> {
+        public T1 t1;
+        public T2 t2;
+        public T3 t3;
+        public T4 t4;
+        public T5 t5;
+        public T6 t6;
+
+        public JTuple6(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+            this.t1 = t1;
+            this.t2 = t2;
+            this.t3 = t3;
+            this.t4 = t4;
+            this.t5 = t5;
+            this.t6 = t6;
+        }
+
+        @Override
+        public String toString() {
+            return "JTuple6{" +
+                    "t1=" + t1 +
+                    ", t2=" + t2 +
+                    ", t3=" + t3 +
+                    ", t4=" + t4 +
+                    ", t5=" + t5 +
+                    ", t6=" + t6 +
+                    '}';
+        }
     }
 }
