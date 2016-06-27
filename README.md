@@ -1,5 +1,9 @@
 JIT-bug
 
+**Update**: this a known issue that will be fixed in 8u112, see https://twitter.com/shipilev/status/747394501803655168,
+https://bugs.openjdk.java.net/browse/JDK-8148752, https://bugs.openjdk.java.net/browse/JDK-8153980.
+
+
 Run `mvn compile exec:java`. If the bug occurs you will see output of the following shape
 (you might have to run the command multiple times until the bug shows up):
 
