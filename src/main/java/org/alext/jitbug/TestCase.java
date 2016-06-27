@@ -26,13 +26,13 @@ public class TestCase {
         @Override
         public void run() {
             try {
-                List<String> demoIds = new ArrayList<>();
+                List<String> someIds= new ArrayList<>();
                 for (int i = 1; i <= 20; i++)
-                    demoIds.add("demoID=" + i);
+                    someIds.add("someId=" + i);
 
-                for (long i = 0; i < 40_000l; i++) {
-                    TimeShiftingViewingPeriod viewingPeriod = TimeShiftingViewingPeriod.LIVE_7;
-                    JTuple6<Long, Long, Byte, String, Byte, String> res = doStuff(demoIds, 192837934738l, viewingPeriod, "0");
+                for (long i = 0; i < 40_000L; i++) {
+                    SomeEnum valueFromEnum = SomeEnum.SOME_VALUE;
+                    JTuple6<Long, Long, Byte, String, Byte, String> res = doStuff(someIds, 192837934738L, valueFromEnum, "0");
                     if (res.t3 == null) {
                         System.out.println(" >> Found null: " + Thread.currentThread().getName() + " at step: " + i + " res:  " + res);
                         break;
@@ -44,12 +44,12 @@ public class TestCase {
         }
 
         private JTuple6<Long, Long, Byte, String, Byte, String> doStuff(
-                List<String> demoIds,
-                long programId,
-                TimeShiftingViewingPeriod viewingPeriod,
-                String marketBreak) {
+                List<String> someIds,
+                long anotherId,
+                SomeEnum someEnum,
+                String someString) {
             C<JTuple6<Long, Long, Byte, String, Byte, String>> r = new C<>(null);
-            demoIds.forEach(demoId -> r.t = new JTuple6<>(null, programId, viewingPeriod.getId(), null, null, marketBreak));
+            someIds.forEach(id -> r.t = new JTuple6<>(null, anotherId, someEnum.getId(), null, null, someString));
             return r.t;
         }
     }
@@ -62,12 +62,12 @@ public class TestCase {
         }
     }
 
-    static enum TimeShiftingViewingPeriod {
-        LIVE_7((byte) 9);
+    static enum SomeEnum {
+        SOME_VALUE((byte) 9);
 
         private Byte id;
 
-        TimeShiftingViewingPeriod(byte id) {
+        SomeEnum(byte id) {
             this.id = id;
         }
 
